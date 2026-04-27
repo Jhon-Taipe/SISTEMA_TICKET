@@ -83,22 +83,34 @@
 
                         <!-- Acciones -->
                         <td>
+                            <div class="d-flex justify-content-between align-items-start">
 
-                            <!-- BOTONES -->
-                            <div class="mb-2">
-                                <a href="/estado/{{t[0]}}/Pendiente" class="btn btn-secondary btn-sm">Pendiente</a>
-                                <a href="/estado/{{t[0]}}/En Proceso" class="btn btn-warning btn-sm">Proceso</a>
-                                <a href="/estado/{{t[0]}}/Resuelto" class="btn btn-success btn-sm">Resuelto</a>
-                                <a href="/estado/{{t[0]}}/Aprobado" class="btn btn-primary btn-sm">Aprobar</a>
-                                <a href="/estado/{{t[0]}}/Rechazado" class="btn btn-danger btn-sm">Rechazar</a>
+                                <!-- IZQUIERDA -->
+                                <div>
+                                    <a href="/estado/{{t[0]}}/Pendiente" class="btn btn-secondary btn-sm">Pendiente</a>
+                                    <a href="/estado/{{t[0]}}/En Proceso" class="btn btn-warning btn-sm">Proceso</a>
+                                    <a href="/estado/{{t[0]}}/Resuelto" class="btn btn-success btn-sm">Resuelto</a>
+                                    <a href="/estado/{{t[0]}}/Aprobado" class="btn btn-primary btn-sm">Aprobar</a>
+                                    <a href="/estado/{{t[0]}}/Rechazado" class="btn btn-danger btn-sm">Rechazar</a>
 
-                                <button type="button" class="btn btn-dark btn-sm" onclick="mostrarInput('{{t[0]}}')">
-                                    Mensaje
-                                </button>
+                                    <button type="button" class="btn btn-dark btn-sm"
+                                        onclick="mostrarInput('{{t[0]}}')">
+                                        Mensaje
+                                    </button>
+                                </div>
+
+                                <!-- DERECHA -->
+                                <div>
+                                    <a href="/eliminar/{{t[0]}}" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('¿Seguro que deseas eliminar este ticket?')">
+                                        Eliminar
+                                    </a>
+                                </div>
+
                             </div>
 
-                            <!-- FORM SEPARADO -->
-                            <div id="form-{{t[0]}}" style="display:none;">
+                            <!-- FORM MENSAJE -->
+                            <div id="form-{{t[0]}}" style="display:none;" class="mt-2">
                                 <form action="/mensaje/{{t[0]}}" method="post">
                                     <input type="text" name="mensaje" class="form-control mb-1"
                                         placeholder="Escribir mensaje">

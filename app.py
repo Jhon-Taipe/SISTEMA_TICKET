@@ -78,6 +78,20 @@ def guardar_mensaje(id):
 
     return redirect("/tickets")
 
+# ELIMINAR TICKET
+@app.route("/eliminar/<int:id>")
+def eliminar_ticket(id):
+    if "user" not in session:
+        return redirect("/")
+
+    conn = sqlite3.connect("tickets.db")
+    c = conn.cursor()
+    c.execute("DELETE FROM tickets WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect("/tickets")
+
 import os
 
 if __name__ == "__main__":
