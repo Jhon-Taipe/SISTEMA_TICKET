@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tickets</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            margin-top: 40px;
+        }
+
+        .card {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- Título -->
+        <div class="d-flex justify-content-between mb-4">
+            <h2>🎫 Sistema de Tickets</h2>
+            <a href="/" class="btn btn-danger">Cerrar sesión</a>
+        </div>
+
+        <!-- Crear ticket -->
+        <div class="card p-3 mb-4">
+            <h5>Nuevo Ticket</h5>
+            <form action="/crear" method="post" class="d-flex gap-2">
+                <input type="text" name="titulo" class="form-control" placeholder="Descripción del problema" required>
+                <button class="btn btn-primary">Crear</button>
+            </form>
+        </div>
+
+        <!-- Tabla -->
+        <div class="card p-3">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <th>Mensaje</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for t in tickets %}
+                    <tr>
+                        <td>{{ t[0] }}</td>
+                        <td>{{ t[1] }}</td>
+
+                        <!-- Estado -->
+                        <td>
+                            {% if t[2] == "Pendiente" %}
+                            <span class="badge bg-secondary">Pendiente</span>
+                            {% elif t[2] == "En Proceso" %}
+                            <span class="badge bg-warning">En Proceso</span>
+                            {% elif t[2] == "Resuelto" %}
+                            <span class="badge bg-success">Resuelto</span>
+                            {% elif t[2] == "Aprobado" %}
+                            <span class="badge bg-primary">Aprobado</span>
+                            {% elif t[2] == "Rechazado" %}
+                            <span class="badge bg-danger">Rechazado</span>
+                            {% endif %}
+                        </td>
+
+                        <!-- Mensaje -->
+                        <td>
+                            {{ t[3] }}
+                        </td>
+
+                        <!-- Acciones -->
+                        <td>
+
+                            <!-- BOTONES -->
+                            <div class="mb-2">
+                                <a href="/estado/{{t[0]}}/Pendiente" class="btn btn-secondary btn-sm">Pendiente</a>
+                                <a href="/estado/{{t[0]}}/En Proceso" class="btn btn-warning btn-sm">Proceso</a>
+                                <a href="/estado/{{t[0]}}/Resuelto" class="btn btn-success btn-sm">Resuelto</a>
+                                <a href="/estado/{{t[0]}}/Aprobado" class="btn btn-primary btn-sm">Aprobar</a>
+                                <a href="/estado/{{t[0]}}/Rechazado" class="btn btn-danger btn-sm">Rechazar</a>
+
+                                <button type="button" class="btn btn-dark btn-sm" onclick="mostrarInput('{{t[0]}}')">
+                                    Mensaje
+                                </button>
+                            </div>
+
+                            <!-- FORM SEPARADO -->
+                            <div id="form-{{t[0]}}" style="display:none;">
+                                <form action="/mensaje/{{t[0]}}" method="post">
+                                    <input type="text" name="mensaje" class="form-control mb-1"
+                                        placeholder="Escribir mensaje">
+                                    <button type="submit" class="btn btn-info btn-sm">Guardar</button>
+                                </form>
+                            </div>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        function mostrarInput(id) {
+            var form = document.getElementById("form-" + id);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
