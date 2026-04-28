@@ -24,11 +24,11 @@ def login():
         user = request.form["usuario"]
         pwd = request.form["password"]
 
-        if user == "admin" and pwd == "123":
+        if (user == "pao" and pwd == "lucas") or (user == "jhon" and pwd == "123"):
             session["user"] = user
             return redirect("/tickets")
-    return render_template("login.html")
 
+    return render_template("login.html")
 # LISTAR TICKETS
 @app.route("/tickets")
 def tickets():
