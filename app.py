@@ -1,16 +1,14 @@
 from flask import Flask, render_template, request, redirect, session
 import psycopg2
 import os
+DATABASE_URL = "postgresql://tickets_bd_user:PsQaGIjyr5d2vstugfEgn4J1RrL1eK1n@dpg-d7o257hf9bms738rc220-a.oregon-postgres.render.com/tickets_bd"
 
 app = Flask(__name__)
 app.secret_key = "12345"
 
 # 🔌 Conexión a PostgreSQL
 def get_connection():
-    return psycopg2.connect(
-        os.environ.get("DATABASE_URL"),
-        sslmode="require"
-    )
+    return psycopg2.connect(DATABASE_URL, sslmode="require")
 
 # LOGIN
 @app.route("/", methods=["GET", "POST"])
@@ -18,7 +16,7 @@ def login():
     if request.method == "POST":
         user = request.form["usuario"]
         pwd = request.form["password"]
-
+    
         if (user == "pao" and pwd == "lucas") or (user == "jhon" and pwd == "123"):
             session["user"] = user
             return redirect("/tickets")
