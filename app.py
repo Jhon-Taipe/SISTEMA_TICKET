@@ -17,7 +17,7 @@ def login():
         user = request.form["usuario"]
         pwd = request.form["password"]
     
-        if (user == "pao" and pwd == "lucas") or (user == "jhon" and pwd == "123") or (user == " Pao" and pwd == "lucas") :
+        if (user == "pao" and pwd == "lucas") or (user == "jhon" and pwd == "123") or (user == "Pao" and pwd == "lucas"):
             session["user"] = user
             return redirect("/tickets")
 
